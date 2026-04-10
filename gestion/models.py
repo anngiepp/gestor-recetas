@@ -1,30 +1,26 @@
 from django.db import models
 
 
-class Director(models.Model):
+class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
-    nacionalidad = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nombre
 
+    class Meta:
+        verbose_name = "Categoría"
+        verbose_name_plural = "Categorías"
 
-class Pelicula(models.Model):
-    GENEROS = [
-        ('accion', 'Acción'),
-        ('comedia', 'Comedia'),
-        ('drama', 'Drama'),
-        ('terror', 'Terror'),
-        ('ciencia_ficcion', 'Ciencia Ficción'),
-        ('animacion', 'Animación'),
-        ('romance', 'Romance'),
-        ('thriller', 'Thriller'),
-    ]
 
-    titulo = models.CharField(max_length=200)
-    anio_estreno = models.IntegerField()
-    genero = models.CharField(max_length=50, choices=GENEROS)
-    director = models.ForeignKey(Director, on_delete=models.CASCADE, related_name='peliculas')
+class Receta(models.Model):
+    nombre = models.CharField(max_length=200)
+    ingredientes = models.TextField()
+    tiempo_preparacion = models.IntegerField(help_text="Tiempo en minutos")
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='recetas')
 
     def __str__(self):
-        return self.titulo
+        return self.nombre
+
+    class Meta:
+        verbose_name = "Receta"
+        verbose_name_plural = "Recetas"
