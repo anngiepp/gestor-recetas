@@ -2,17 +2,17 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Películas
-    path('', views.pelicula_list, name='pelicula_list'),
-    path('peliculas/<int:pk>/', views.pelicula_detail, name='pelicula_detail'),
-    path('peliculas/nueva/', views.pelicula_create, name='pelicula_create'),
-    path('peliculas/<int:pk>/editar/', views.pelicula_update, name='pelicula_update'),
-    path('peliculas/<int:pk>/eliminar/', views.pelicula_delete, name='pelicula_delete'),
+    # Recetas
+    path('', views.receta_list, name='receta_list'),
+    path('recetas/<int:pk>/', views.receta_detail, name='receta_detail'),
+    path('recetas/nueva/', views.receta_create, name='receta_create'),
+    path('recetas/<int:pk>/editar/', views.receta_update, name='receta_update'),
+    path('recetas/<int:pk>/eliminar/', views.receta_delete, name='receta_delete'),
 
-    # Directores
-    path('directores/', views.director_list, name='director_list'),
-    path('directores/<int:pk>/', views.director_detail, name='director_detail'),
-    path('directores/nuevo/', views.director_create, name='director_create'),
-    path('directores/<int:pk>/editar/', views.director_update, name='director_update'),
-    path('directores/<int:pk>/eliminar/', views.director_delete, name='director_delete'),
+    # Categorías
+    path('categorias/', views.categoria_list, name='categoria_list'),
+    path('categorias/<int:pk>/', views.categoria_detail, name='categoria_detail'),
+    path('categorias/nueva/', views.categoria_create, name='categoria_create'),
+    path('categorias/<int:pk>/editar/', views.categoria_update, name='categoria_update'),
+    path('categorias/<int:pk>/eliminar/', views.categoria_delete, name='categoria_delete'),
 ]
