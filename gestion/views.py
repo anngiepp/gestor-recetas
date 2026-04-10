@@ -1,76 +1,76 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Pelicula, Director
-from .forms import PeliculaForm, DirectorForm
+from .models import Receta, Categoria
+from .forms import RecetaForm, CategoriaForm
 
 
-# ── PELÍCULAS ──────────────────────────────────────────
+# ── RECETAS ────────────────────────────────────────────
 
-def pelicula_list(request):
+def receta_list(request):
     query = request.GET.get('q', '')
-    peliculas = Pelicula.objects.select_related('director').all()
+    recetas = Receta.objects.select_related('categoria').all()
     if query:
-        peliculas = peliculas.filter(titulo__icontains=query)
-    return render(request, 'gestion/pelicula_list.html', {'peliculas': peliculas, 'query': query})
+        recetas = recetas.filter(nombre__icontains=query)
+    return render(request, 'gestion/receta_list.html', {'recetas': recetas, 'query': query})
 
-def pelicula_detail(request, pk):
-    pelicula = get_object_or_404(Pelicula, pk=pk)
-    return render(request, 'gestion/pelicula_detail.html', {'pelicula': pelicula})
+def receta_detail(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
+    return render(request, 'gestion/receta_detail.html', {'receta': receta})
 
-def pelicula_create(request):
-    form = PeliculaForm(request.POST or None)
+def receta_create(request):
+    form = RecetaForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('pelicula_list')
-    return render(request, 'gestion/pelicula_form.html', {'form': form, 'titulo': 'Nueva Película'})
+        return redirect('receta_list')
+    return render(request, 'gestion/receta_form.html', {'form': form, 'titulo': 'Nueva Receta'})
 
-def pelicula_update(request, pk):
-    pelicula = get_object_or_404(Pelicula, pk=pk)
-    form = PeliculaForm(request.POST or None, instance=pelicula)
+def receta_update(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
+    form = RecetaForm(request.POST or None, instance=receta)
     if form.is_valid():
         form.save()
-        return redirect('pelicula_list')
-    return render(request, 'gestion/pelicula_form.html', {'form': form, 'titulo': 'Editar Película'})
+        return redirect('receta_list')
+    return render(request, 'gestion/receta_form.html', {'form': form, 'titulo': 'Editar Receta'})
 
-def pelicula_delete(request, pk):
-    pelicula = get_object_or_404(Pelicula, pk=pk)
+def receta_delete(request, pk):
+    receta = get_object_or_404(Receta, pk=pk)
     if request.method == 'POST':
-        pelicula.delete()
-        return redirect('pelicula_list')
-    return render(request, 'gestion/pelicula_confirm_delete.html', {'pelicula': pelicula})
+        receta.delete()
+        return redirect('receta_list')
+    return render(request, 'gestion/receta_confirm_delete.html', {'receta': receta})
 
 
-# ── DIRECTORES ─────────────────────────────────────────
+# ── CATEGORÍAS ─────────────────────────────────────────
 
-def director_list(request):
+def categoria_list(request):
     query = request.GET.get('q', '')
-    directores = Director.objects.all()
+    categorias = Categoria.objects.all()
     if query:
-        directores = directores.filter(nombre__icontains=query)
-    return render(request, 'gestion/director_list.html', {'directores': directores, 'query': query})
+        categorias = categorias.filter(nombre__icontains=query)
+    return render(request, 'gestion/categoria_list.html', {'categorias': categorias, 'query': query})
 
-def director_detail(request, pk):
-    director = get_object_or_404(Director, pk=pk)
-    peliculas = director.peliculas.all()
-    return render(request, 'gestion/director_detail.html', {'director': director, 'peliculas': peliculas})
+def categoria_detail(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+    recetas = categoria.recetas.all()
+    return render(request, 'gestion/categoria_detail.html', {'categoria': categoria, 'recetas': recetas})
 
-def director_create(request):
-    form = DirectorForm(request.POST or None)
+def categoria_create(request):
+    form = CategoriaForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('director_list')
-    return render(request, 'gestion/director_form.html', {'form': form, 'titulo': 'Nuevo Director'})
+        return redirect('categoria_list')
+    return render(request, 'gestion/categoria_form.html', {'form': form, 'titulo': 'Nueva Categoría'})
 
-def director_update(request, pk):
-    director = get_object_or_404(Director, pk=pk)
-    form = DirectorForm(request.POST or None, instance=director)
+def categoria_update(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+    form = CategoriaForm(request.POST or None, instance=categoria)
     if form.is_valid():
         form.save()
-        return redirect('director_list')
-    return render(request, 'gestion/director_form.html', {'form': form, 'titulo': 'Editar Director'})
+        return redirect('categoria_list')
+    return render(request, 'gestion/categoria_form.html', {'form': form, 'titulo': 'Editar Categoría'})
 
-def director_delete(request, pk):
-    director = get_object_or_404(Director, pk=pk)
+def categoria_delete(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
     if request.method == 'POST':
-        director.delete()
-        return redirect('director_list')
-    return render(request, 'gestion/director_confirm_delete.html', {'director': director})
+        categoria.delete()
+        return redirect('categoria_list')
+    return render(request, 'gestion/categoria_confirm_delete.html', {'categoria': categoria})
