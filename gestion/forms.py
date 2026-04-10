@@ -1,24 +1,29 @@
 from django import forms
-from .models import Pelicula, Director
+from .models import Receta, Categoria
 
 
-class DirectorForm(forms.ModelForm):
+class CategoriaForm(forms.ModelForm):
     class Meta:
-        model = Director
-        fields = ['nombre', 'nacionalidad']
+        model = Categoria
+        fields = ['nombre']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'nacionalidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Postres, Entradas, Bebidas'}),
         }
 
 
-class PeliculaForm(forms.ModelForm):
+class RecetaForm(forms.ModelForm):
     class Meta:
-        model = Pelicula
-        fields = ['titulo', 'anio_estreno', 'genero', 'director']
+        model = Receta
+        fields = ['nombre', 'ingredientes', 'tiempo_preparacion', 'categoria']
         widgets = {
-            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
-            'anio_estreno': forms.NumberInput(attrs={'class': 'form-control'}),
-            'genero': forms.Select(attrs={'class': 'form-select'}),
-            'director': forms.Select(attrs={'class': 'form-select'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la receta'}),
+            'ingredientes': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Lista de ingredientes...'}),
+            'tiempo_preparacion': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tiempo en minutos'}),
+            'categoria': forms.Select(attrs={'class': 'form-select'}),
+        }
+        labels = {
+            'nombre': 'Nombre',
+            'ingredientes': 'Ingredientes',
+            'tiempo_preparacion': 'Tiempo de preparación (minutos)',
+            'categoria': 'Categoría',
         }
